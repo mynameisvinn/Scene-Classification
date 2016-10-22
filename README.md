@@ -24,6 +24,5 @@ docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder myn
 Then, from command line, do
 
 ```
-$ cd /src/caffe
 $ python run_scene.py
 ```
