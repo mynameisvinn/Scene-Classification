@@ -33,6 +33,7 @@ def classify_scene(fpath_design, fpath_weights, im):
 
 
 if __name__ == '__main__':
+
 	# fetch pretrained models
 	fpath_design = 'models_places/deploy_alexnet_places365.prototxt'
 	fpath_weights = 'models_places/alexnet_places365.caffemodel'
@@ -41,5 +42,5 @@ if __name__ == '__main__':
 	im = caffe.io.load_image(sys.argv[1])
 
 	# predict
-	classify_scene(im)
+	classify_scene(fpath_design, fpath_weights, im)
 
