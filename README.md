@@ -31,6 +31,24 @@ docker build .
 
 ## run
 
+### option 1 (recommended)
+
+from command line, do
+
+```
+docker run mynameisvinn/vrb_scene_classification python run_scene.py images/mountains.jpg
+
+```
+if youve made it this far, you should see top 5 predictions: 
+
+* mountain_snowy
+* glacier
+* mountain
+* snowfield
+* volcano
+
+### option 2
+
 from command line, do
 
 ```
@@ -42,10 +60,3 @@ then do
 ```
 $ python run_scene.py images/mountains.jpg
 ```
-if youve made it this far, it should print the top 5 predictions: 
-
-* mountain_snowy
-* glacier
-* mountain
-* snowfield
-* volcano
