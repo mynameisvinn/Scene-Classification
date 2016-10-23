@@ -14,7 +14,7 @@ trained on 2.5m images comprising 205 unique scene categories from mit's csail p
 
 ## get docker image
 
-building caffe from source is not for the faint of heart so you should do one of the following:
+building caffe from source ruined my weekend. it is not for the faint of heart so you should do one of the following:
 
 ### option 1: pull from docker hub
 
@@ -42,3 +42,11 @@ then do
 ```
 $ python run_scene.py images/mountains.jpg
 ```
+
+if youve made it this far, it should print the top 5 predictions: 
+
+* mountain_snowy
+* glacier
+* mountain
+* snowfield
+* volcano

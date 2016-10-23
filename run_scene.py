@@ -3,7 +3,9 @@ import sys
 import caffe
 import pickle
 
-def classify_scene(fpath_design, fpath_weights, im):
+
+
+def classify_scene(fpath_design, fpath_weights, fpath_labels, im):
 
 	# initialize net
 	net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
@@ -24,13 +26,14 @@ def classify_scene(fpath_design, fpath_weights, im):
 	# compute
 	out = net.forward()
 
-	# predicted predicted class
-	idx = out['prob'].argmax()
-	with open('resources/labels.pkl', 'rb') as f:
+	# print top 5 predictions - TODO return as bytearray?
+	with open(fpath_labels, 'rb') as f:
+
 		labels = pickle.load(f)
-		# top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
-		# print labels[top_k]
-		print labels[idx]
+		top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
+		
+		for i, k in enumerate(top_k):
+			print i, labels[k]
 
 
 if __name__ == '__main__':
@@ -38,10 +41,11 @@ if __name__ == '__main__':
 	# fetch pretrained models
 	fpath_design = 'models_places/deploy_alexnet_places365.prototxt'
 	fpath_weights = 'models_places/alexnet_places365.caffemodel'
+	fpath_labels = 'resources/labels.pkl'
 
 	# fetch image
 	im = caffe.io.load_image(sys.argv[1])
 
 	# predict
-	classify_scene(fpath_design, fpath_weights, im)
+	classify_scene(fpath_design, fpath_weights, fpath_labels, im)
 
