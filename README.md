@@ -43,6 +43,8 @@ then do
 $ python run_scene.py images/mountains.jpg
 ```
 
+you might see: "libdc1394 error: Failed to initialize libdc1394". i am trying to resolve this error but for you can ignore the message in the meantime. 
+
 if youve made it this far, it should print the top 5 predictions: 
 
 * mountain_snowy
