@@ -1,6 +1,7 @@
 import numpy as np
 import sys
 import caffe
+import pickle
 
 def classify_scene(fpath_design, fpath_weights, im):
 
@@ -24,12 +25,12 @@ def classify_scene(fpath_design, fpath_weights, im):
 	out = net.forward()
 
 	# predicted predicted class
-	print out['prob'].argmax()
-
-	#print predicted labels
-	# labels = np.loadtxt("data/ilsvrc12/synset_words.txt", str, delimiter='\t')
-	# top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
-	# print labels[top_k]
+	idx = out['prob'].argmax()
+	with open('resources/labels.pkl', 'rb') as f:
+    	labels = pickle.load(f)
+		# top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
+		# print labels[top_k]
+		print labels[idx]
 
 
 if __name__ == '__main__':
