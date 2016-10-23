@@ -27,7 +27,7 @@ def classify_scene(fpath_design, fpath_weights, im):
 	# predicted predicted class
 	idx = out['prob'].argmax()
 	with open('resources/labels.pkl', 'rb') as f:
-    	labels = pickle.load(f)
+		labels = pickle.load(f)
 		# top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
 		# print labels[top_k]
 		print labels[idx]
