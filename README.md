@@ -1,7 +1,7 @@
 ## what is this?
-a scene classifier for 360 photos. 
+a scene classifier for photos. 
 
-205 scenes are recognized including mountains, aquariums, bookstores, soccer fields. exotic settings are included too - castles, chalets, and catacombs. as it currently stands, top-1 accuracy is 50.04% and top-5 accuracy is 81.10%. 
+205 scenes are recognized including mountains, aquariums, bookstores, soccer fields, etc. exotic settings are included too - castles, chalets, and catacombs. as it currently stands, top-1 accuracy is 50.04% and top-5 accuracy is 81.10%. 
 
 ## specs
 * Ubuntu 14.04
@@ -14,7 +14,7 @@ trained on 2.5m images comprising 205 unique scene categories from mit's csail p
 
 ## get da docker image
 
-building caffe from source is not for the faint of heart so i recommend pulling from docker hub.
+building caffe from source is not for the faint of heart so you should do one of the following:
 
 ### option 1: from docker hub
 
@@ -25,23 +25,19 @@ docker pull mynameisvinn/vrb_scene_classification
 ### option 2: build locally
 ```
 git clone https://github.com/mynameisvinn/vrb_scene_classification
-```
-
-then, from command line, do
-
-```
 cd vrb_scene_classification
+docker build
 ```
 
-## running docker image
+## run it
 
-To spin up container, do
+do this
 
 ```
 docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder mynameisvinn/vrb_scene_classification
 ```
 
-then, from command line, do
+then do
 
 ```
 $ python run_scene.py images/mountains.jpg
