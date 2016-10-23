@@ -1,5 +1,5 @@
 ## what is this?
-a scene classifier for photos. 
+a scene classifier for 360 photos. 
 
 205 scenes are recognized including mountains, aquariums, bookstores, soccer fields, etc. exotic settings are included too - castles, chalets, and catacombs. in its current form, top-1 accuracy is 50.04% and top-5 accuracy is 81.10%. 
 
