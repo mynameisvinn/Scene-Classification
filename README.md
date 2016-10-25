@@ -52,7 +52,7 @@ if youve made it this far, you should see top 5 predictions:
 from command line, do
 
 ```
-docker run -it -p 8888:8888 -p 6006:6006 -v /sharedfolder:/root/sharedfolder mynameisvinn/vrb_scene_classification
+docker run -it mynameisvinn/vrb_scene_classification
 ```
 
 then do
