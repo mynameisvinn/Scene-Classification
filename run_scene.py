@@ -48,7 +48,7 @@ if __name__ == '__main__':
     MODEL_TYPE = 'models_places/deploy_alexnet_places365.prototxt'
     WEIGHTS = 'models_places/alexnet_places365.caffemodel'
     MEAN = 'python/caffe/imagenet/ilsvrc_2012_mean.npy'
-    LABELS = 'resources/labels.pkl'
+    LABELS = 'labels/labels.pkl'
 
     test_image = caffe.io.load_image(sys.argv[1])
     predictions = classify_scene(MODEL_TYPE, WEIGHTS, LABELS, MEAN, test_image)
