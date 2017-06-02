@@ -1,49 +1,56 @@
+"""
+scene classification with a pretrained alexnet caffe model.
+"""
+
 import sys
 import pickle
 import numpy as np
 import caffe
 
-def classify_scene(fpath_design, fpath_weights, fpath_labels, im):
+def classify_scene(fpath_design, fpath_weights, fpath_labels, fpath_mean, image):
+    """
+    call a pretrained convnet to perform scene classification.
 
-	# initialize net
-	net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
+    parameters
+    ----------
+    fpath_design : str
+        file containing convnet architecture in json format.
+    fpath_weights : str
+        file containing pretrained convnet weights.
+    fpath_labels : str
+        file containing labels corresponding to pretrained model.
 
-	# load input and configure preprocessing
-	transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
-	transformer.set_mean('data', np.load('python/caffe/imagenet/ilsvrc_2012_mean.npy').mean(1).mean(1)) # TODO - remove hardcoded path
-	transformer.set_transpose('data', (2,0,1))
-	transformer.set_channel_swap('data', (2,1,0))
-	transformer.set_raw_scale('data', 255.0)
+    returns
+    -------
+    top_k : list
+        list containing top five predictions.
+    """
+    net = caffe.Net(fpath_design, fpath_weights, caffe.TEST)
+    transformer = caffe.io.Transformer({'data': net.blobs['data'].data.shape})
+    transformer.set_mean('data', np.load(fpath_mean).mean(1).mean(1))
+    transformer.set_transpose('data', (2, 0, 1))
+    transformer.set_channel_swap('data', (2, 1, 0))
+    transformer.set_raw_scale('data', 255.0)
+    net.blobs['data'].reshape(1, 3, 227, 227)  # resize to 227x227 
+    net.blobs['data'].data[...] = transformer.preprocess('data', image)
+    out = net.forward()
 
-	# since we classify only one image, we change batch size from 10 to 1
-	net.blobs['data'].reshape(1,3,227,227)
-
-	# load the image in the data layer
-	net.blobs['data'].data[...] = transformer.preprocess('data', im)
-
-	# compute
-	out = net.forward()
-
-	# print top 5 predictions - TODO return as bytearray?
-	with open(fpath_labels, 'rb') as f:
-
-		labels = pickle.load(f)
-		top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
-		
-		for i, k in enumerate(top_k):
-			print i, labels[k]
+    with open(fpath_labels, 'rb') as f:
+        labels = pickle.load(f)
+        top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
+        return top_k
+        # for i, k in enumerate(top_k):
+            # print i, labels[k]
 
 
 if __name__ == '__main__':
+    # pretrained model
+    MODEL_TYPE = 'models_places/deploy_alexnet_places365.prototxt'
+    WEIGHTS = 'models_places/alexnet_places365.caffemodel'
+    MEAN = 'python/caffe/imagenet/ilsvrc_2012_mean.npy'
+    LABELS = 'resources/labels.pkl'
 
-	# fetch pretrained models
-	fpath_design = 'models_places/deploy_alexnet_places365.prototxt'
-	fpath_weights = 'models_places/alexnet_places365.caffemodel'
-	fpath_labels = 'resources/labels.pkl'
-
-	# fetch image
-	im = caffe.io.load_image(sys.argv[1])
-
-	# predict
-	classify_scene(fpath_design, fpath_weights, fpath_labels, im)
-
+    test_image = caffe.io.load_image(sys.argv[1])
+    predictions = classify_scene(MODEL_TYPE, WEIGHTS, LABELS, MEAN, test_image)
+    for i, k in enumerate(predictions):
+        print i, labels[k]
