@@ -1,9 +1,7 @@
-import numpy as np
 import sys
-import caffe
 import pickle
-
-
+import numpy as np
+import caffe
 
 def classify_scene(fpath_design, fpath_weights, fpath_labels, im):
 
