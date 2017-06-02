@@ -9,7 +9,7 @@ a scene classifier for 360 photos.
 * [Numpy](http://www.numpy.org/), [SciPy](https://www.scipy.org/), [Pandas](http://pandas.pydata.org/), [Scikit Learn](http://scikit-learn.org/), [Matplotlib](http://matplotlib.org/)
 
 ## ml deets
-trained on 2.5m images comprising 205 unique scene categories from mit's csail [places dataset](http://places.csail.mit.edu/). for details, read ["places: an image database for deep scene understanding"](http://places.csail.mit.edu/places2_arxiv.pdf).
+trained on 2.5m images comprising 205 unique scene categories from [mit's csail places](http://places.csail.mit.edu/). for details, read ["places: an image database for deep scene understanding"](http://places.csail.mit.edu/places2_arxiv.pdf).
 
 ## get da docker
 building caffe from source is not for the faint of heart so you should do the following:
@@ -23,15 +23,9 @@ docker build -t scene_classification .
 ### option 1 (recommended)
 from command line, do
 ```
-docker run scene_classification python run_scene.py images/park.jpg
+docker run scene_classification python run_scene.py images/triple.jpg
 ```
-you should see top five predictions: 
-* orchard
-* tree farm
-* topiary garden
-* lawn
-* park
-
+you should see top five predictions, in order of confidence: water park, ocean, lagoon, beach, coast.
 ### option 2
 from command line, do
 ```

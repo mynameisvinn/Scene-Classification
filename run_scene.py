@@ -9,7 +9,8 @@ import caffe
 
 def classify_scene(fpath_design, fpath_weights, fpath_labels, fpath_mean, image):
     """
-    call a pretrained convnet to perform scene classification.
+    call a pretrained convnet to perform scene classification. for more 
+    information, refer to   
 
     parameters
     ----------
@@ -39,9 +40,6 @@ def classify_scene(fpath_design, fpath_weights, fpath_labels, fpath_mean, image)
         labels = pickle.load(f)
         top_k = net.blobs['prob'].data[0].flatten().argsort()[-1:-6:-1]
         return top_k
-        # for i, k in enumerate(top_k):
-            # print i, labels[k]
-
 
 if __name__ == '__main__':
     # pretrained model
